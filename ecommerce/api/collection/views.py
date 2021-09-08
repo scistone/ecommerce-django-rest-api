@@ -1,8 +1,8 @@
 #RestFramework
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.generics import RetrieveAPIView,CreateAPIView,ListAPIView,RetrieveDestroyAPIView,RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser
+
+from rest_framework.authentication import SessionAuthentication
 
 #Django Filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -26,7 +26,7 @@ class CreateCollectionAPIView(CreateAPIView):
     """
     queryset = Collection.objects.all()
     permission_classes = [IsAdminUser]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CollectionSerializer
 
 

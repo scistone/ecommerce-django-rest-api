@@ -1,6 +1,6 @@
 from io import BytesIO
-
 from PIL import Image
+from django.core.files import File
 
 from django.db import models
 from django.utils.text import slugify
@@ -43,43 +43,19 @@ class Collection(models.Model):
     def __str__(self):
         return self.name
 
-class Tag(models.Model):
-    tag         = models.CharField(unique=True,primary_key=True,max_length=100)
-    def __str__(self):
-        return f"{self.tag}"
-
-class Media(models.Model):
-    MEDIA_TYPES = [
-        ('I','Image'),
-        ('V','Video')
-    ]
-    slug            = models.CharField(max_length=150)
-    media_type      = models.CharField(choices=MEDIA_TYPES,max_length=1)
-    image           = models.FileField(upload_to="uploads/",blank=True,null=True)
-
-class Brand(models.Model):
-    title       = models.CharField(max_length=144,unique=True)
-    logo        = models.URLField(null=True,blank=True) #default store logo
-    is_active   = models.BooleanField(default=False,editable=False)
-
-    def __str__(self):
-        return f"{self.title}"
-
 
 class Product(models.Model):
-    categories      = models.ForeignKey(Collection,on_delete=models.SET_NULL,related_name='products',null=True)
+    categories      = models.ManyToManyField(Collection,blank=True)
     barcode         = models.CharField(max_length=20)
     title           = models.CharField(max_length=144)
-    brand           = models.ForeignKey(Brand,on_delete=models.SET_NULL,null=True)
-    thumbnail       = models.URLField()
+    thumbnail       = models.ImageField(upload_to='uploads/',blank=True,null=True)
+    image           = models.ImageField(upload_to='uploads/',blank=True,null=True)
     color           = models.CharField(max_length=20,blank=True,null=True)
     size            = models.CharField(max_length=20,blank=True,null=True)
     model_code      = models.CharField(max_length=20)
     description     = models.TextField(blank=True,null=True)
     slug            = models.SlugField(unique=True,max_length=150,editable=False)
     meta_description= models.CharField(max_length=144,editable=False)
-    tags            = models.ManyToManyField(Tag,blank=True)
-    medias          = models.ManyToManyField(Media,blank=True)
     date_created    = models.DateTimeField(auto_now_add=True)
     price           = models.DecimalField(max_digits=6,decimal_places=2)
 
@@ -87,7 +63,7 @@ class Product(models.Model):
         slug   = slugify(self.title.replace("ı","i"))
         unique = slug
         number = 1
-        while Item.objects.filter(slug=unique).exists():
+        while Product.objects.filter(slug=unique).exists():
             unique = '{}-{}'.format(slug,number)
             number += 1
         return unique
@@ -101,11 +77,37 @@ class Product(models.Model):
         if self.slug == "":
             self.slug = self.get_slug()
 
-        return super(Item,self).save(*args,**kwargs)
+        return super(Product,self).save(*args,**kwargs)
         
     def get_absolute_url(self):
-        return f'/{self.slug}/'
+        return f'product/{self.model_code}/'
 
     def __str__(self):
         return self.title
+    
+    def get_image(self):
+        if self.image:
+            return 'http://127.0.0.1:8000' + self.image.url
+        return ''
+    
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return 'http://127.0.0.1:8000' + self.thumbnail.url
+        
+        else:
+            if self.image:
+                self.thumbnail = self.make_thumbnail(self.image)
+                self.save()
+                return 'http://127.0.0.1:8000' + self.thumbnail.url
+                
 
+    def make_thumbnail(self, image, size=(300,200)):
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+        
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+        thumbnail = File(thumb_io, name=image.name)
+
+        return thumbnail
