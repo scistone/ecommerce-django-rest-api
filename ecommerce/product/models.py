@@ -3,6 +3,8 @@ from io import BytesIO
 from PIL import Image
 
 from django.db import models
+from django.utils.text import slugify
+
 
 # Create your models here.
 
@@ -13,7 +15,7 @@ class Collection(models.Model):
     slug                = models.SlugField(unique=True,max_length=150,editable=False)
     description         = models.TextField(null=True,blank=True)
     meta_description    = models.CharField(max_length=144,editable=False)
-    date_created        = models.DateTimeField(auto_now_add=True)
+    date_created        = models.DateTimeField(auto_now_add=True,editable=False)
 
     def get_slug(self):
         slug   = slugify(self.name.replace("ı","i"))
