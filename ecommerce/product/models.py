@@ -40,7 +40,7 @@ class Collection(models.Model):
 
 
 class Product(models.Model):
-    collection      = models.ManyToManyField(Collection,blank=True)
+    collections     = models.ManyToManyField(Collection,blank=True)
     barcode         = models.CharField(max_length=20)
     title           = models.CharField(max_length=144)
     thumbnail       = models.ImageField(upload_to='uploads/',blank=True,null=True)

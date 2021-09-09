@@ -1,6 +1,6 @@
 #RestFramework
 from rest_framework.generics import RetrieveAPIView,CreateAPIView,ListAPIView,RetrieveDestroyAPIView,RetrieveUpdateAPIView
-from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication
 from django.shortcuts import get_object_or_404
@@ -15,8 +15,8 @@ from rest_framework import filters
 from knox.auth import TokenAuthentication
 
 #Serializers & Models
-from product.models import Collection
-from .serializers import CollectionSerializer
+from product.models import Collection,Product
+from api.serializers import CollectionSerializer,CreateProductSerializer
 
 
 class CreateCollectionAPIView(CreateAPIView):
@@ -32,22 +32,6 @@ class CreateCollectionAPIView(CreateAPIView):
     serializer_class = CollectionSerializer
 
 
-class CollectionListAPIView(ListAPIView):
-    """
-
-    Method: GET
-    URL: /api/collection/list/
-
-    """
-    queryset = Collection.objects.all()
-    permission_classes = [AllowAny]
-    authentication_classes = [TokenAuthentication]
-    serializer_class = CollectionSerializer
-
-    filter_backends = [DjangoFilterBackend,filters.OrderingFilter]
-    filterset_fields = ['id','name','description','slug']
-    ordering_fields = ['id']
-
 class CollectionUpdateAPIView(RetrieveUpdateAPIView):
     """
 
@@ -57,7 +41,7 @@ class CollectionUpdateAPIView(RetrieveUpdateAPIView):
     """
     queryset = Collection.objects.all()
     permission_classes = [IsAdminUser]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CollectionSerializer
     lookup_field = 'slug'
 
@@ -71,6 +55,31 @@ class CollectionDeleteAPIView(RetrieveDestroyAPIView):
     """
     queryset = Collection.objects.all()
     permission_classes = [IsAdminUser]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CollectionSerializer
+    lookup_field = 'slug'
+
+class CreateProductAPIView(CreateAPIView):
+    """
+
+    Method: POST
+    URL: /api/collection/add/
+
+    """
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+    serializer_class = CreateProductSerializer
+
+class ProductUpdateAPIView(RetrieveUpdateAPIView):
+    """
+
+    Method: GET,PUT
+    URL: /api/product/update/<slug>/
+
+    """
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+    serializer_class = CreateProductSerializer
     lookup_field = 'slug'
