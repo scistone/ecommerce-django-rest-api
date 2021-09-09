@@ -90,12 +90,26 @@ from core.models import Menu,MenuElement
 from .serializers import CreateMenuElementSerializer,CreateMenuSerializer
 
 class CreateMenuAPIView(CreateAPIView):
+    """
+    
+    Method: POST
+    URL : api/sellercentral/menu/add/
+
+    """
+
+
     queryset = Menu.objects.all()
     permission_classes = [IsAdminUser]
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CreateMenuSerializer
 
 class CreateMenuElementAPIView(CreateAPIView):
+    """
+    
+    Method: POST
+    URL : api/sellercentral/menu/element/add/
+
+    """
     queryset = MenuElement.objects.all()
     permission_classes = [IsAdminUser]
     authentication_classes = [TokenAuthentication,SessionAuthentication]

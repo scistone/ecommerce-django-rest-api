@@ -72,6 +72,12 @@ class CollectionListAPIView(ListAPIView):
     ordering_fields = ['id']
 
 class MenuListView(ListAPIView):
+    """
+
+    Method: GET
+    URL: /api/menu/
+
+    """
     serializer_class        = MenuSerializer
     permission_classes      = [AllowAny]
     queryset                = Menu.objects.all()
