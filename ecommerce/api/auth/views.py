@@ -1,13 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
-
-from rest_framework.generics import RetrieveAPIView,GenericAPIView
-
+from rest_framework.generics import RetrieveAPIView,RetrieveUpdateAPIView,GenericAPIView,UpdateAPIView
 from rest_framework.permissions import AllowAny,IsAuthenticated,IsAdminUser
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.views import APIView
+
 from knox.models import AuthToken
 
 from users.models import User
-from .serializers import RegisterSerializer,UserSerializer,LoginSerializer
+from .serializers import RegisterSerializer,UserSerializer,LoginSerializer,ChangePasswordSerializer
 #Register
 from knox.auth import TokenAuthentication
 
@@ -48,8 +49,24 @@ class LoginAPIView(GenericAPIView):
 class UserAPIView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
 
     def get_object(self):
-        print(self.request)
+        return self.request.user
+
+class ChangePasswordView(UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = [TokenAuthentication]
+    serializer_class = ChangePasswordSerializer
+
+    def get_object(self, queryset=User):
+        return self.request.user
+
+
+class UserUpdateAPIView(RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+
+    def get_object(self, queryset=User):
         return self.request.user

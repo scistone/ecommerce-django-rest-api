@@ -23,7 +23,7 @@ class CreateCollectionAPIView(CreateAPIView):
     """
 
     Method: POST
-    URL: /api/collection/add/
+    URL: /api/sellercentral/collection/add/
 
     """
     queryset = Collection.objects.all()
@@ -36,7 +36,7 @@ class CollectionUpdateAPIView(RetrieveUpdateAPIView):
     """
 
     Method: GET,PUT
-    URL: /api/collection/update/<slug>/
+    URL: /api/sellercentral/collection/update/<slug>/
 
     """
     queryset = Collection.objects.all()
@@ -50,7 +50,7 @@ class CollectionDeleteAPIView(RetrieveDestroyAPIView):
     """
 
     Method: DELETE
-    URL: /api/collection/delete/<slug>/
+    URL: /api/sellercentral/collection/delete/<slug>/
 
     """
     queryset = Collection.objects.all()
@@ -63,7 +63,7 @@ class CreateProductAPIView(CreateAPIView):
     """
 
     Method: POST
-    URL: /api/collection/add/
+    URL: /api/sellercentral/collection/add/
 
     """
     queryset = Product.objects.all()
@@ -76,7 +76,7 @@ class ProductUpdateAPIView(RetrieveUpdateAPIView):
     """
 
     Method: GET,PUT
-    URL: /api/product/update/<slug>/
+    URL: /api/sellercentral/product/update/<slug>/
 
     """
     queryset = Product.objects.all()

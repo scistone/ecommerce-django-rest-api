@@ -30,7 +30,7 @@ class ListProductAPIView(ListAPIView):
     """
 
     Method: GET
-    URL: /api/product/all/
+    URL: /api/products/
 
     """
     queryset = Product.objects.all()
@@ -42,6 +42,12 @@ class ListProductAPIView(ListAPIView):
     ordering_fields = ['id']
 
 class ProductDetailAPIView(APIView):
+    """
+
+    Method: GET
+    URL: product/<model_code>/<product_slug>/
+
+    """
     permission_classes = [AllowAny]
     def get(self, request, model_code, product_slug, format=None):
         product = Product.objects.filter(model_code=model_code)
@@ -53,7 +59,7 @@ class CollectionListAPIView(ListAPIView):
     """
 
     Method: GET
-    URL: /api/collection/list/
+    URL: /api/collections/
 
     """
     queryset = Collection.objects.all()

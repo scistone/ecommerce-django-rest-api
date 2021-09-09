@@ -15,7 +15,7 @@ urlpatterns = [
     
 
     path('menu/', MenuListView.as_view(), name='menu'),
-    path('collections/' ,  CollectionListAPIView.as_view(),  name='categories'),
-    path('products/' ,  ListProductAPIView.as_view(),  name='products'),
-    path('products/detail/<model_code>/<product_slug>', ProductDetailAPIView.as_view(), name='product-detail'),
+    path('collections/',  CollectionListAPIView.as_view(),  name='categories'),
+    path('products/',  ListProductAPIView.as_view(),  name='products'),
+    path('product/<model_code>/<product_slug>/', ProductDetailAPIView.as_view(), name='product-detail'),
 ]
