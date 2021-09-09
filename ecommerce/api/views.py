@@ -16,7 +16,13 @@ from knox.auth import TokenAuthentication
 
 #Serializers & Models
 from product.models import Collection,Product
-from .serializers import CollectionSerializer,CreateProductSerializer,ProductSerializer
+from core.models import Menu
+from .serializers import (
+        CollectionSerializer,
+        CreateProductSerializer,
+        ProductSerializer,
+        MenuSerializer
+)
 
 
 
@@ -59,3 +65,9 @@ class CollectionListAPIView(ListAPIView):
     filterset_fields = ['id','name','description','slug']
     ordering_fields = ['id']
 
+class MenuListView(ListAPIView):
+    serializer_class        = MenuSerializer
+    permission_classes      = [AllowAny]
+    queryset                = Menu.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["menu_type"]

@@ -71,6 +71,7 @@ class CreateProductAPIView(CreateAPIView):
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CreateProductSerializer
 
+###########################
 class ProductUpdateAPIView(RetrieveUpdateAPIView):
     """
 
@@ -83,3 +84,19 @@ class ProductUpdateAPIView(RetrieveUpdateAPIView):
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CreateProductSerializer
     lookup_field = 'slug'
+
+################################
+from core.models import Menu,MenuElement
+from .serializers import CreateMenuElementSerializer,CreateMenuSerializer
+
+class CreateMenuAPIView(CreateAPIView):
+    queryset = Menu.objects.all()
+    permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+    serializer_class = CreateMenuSerializer
+
+class CreateMenuElementAPIView(CreateAPIView):
+    queryset = MenuElement.objects.all()
+    permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication,SessionAuthentication]
+    serializer_class = CreateMenuElementSerializer

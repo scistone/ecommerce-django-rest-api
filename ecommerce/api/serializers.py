@@ -55,3 +55,48 @@ class ProductSerializer(serializers.ModelSerializer):
             'get_image',
             'get_thumbnail'
         ]
+
+from core.models import Menu,MenuElement
+class MenuElementSerializer(serializers.ModelSerializer):
+    category        = serializers.SerializerMethodField()
+    category_id     = serializers.SerializerMethodField()
+    class Meta:
+        model = MenuElement
+        ordering = ['-priority']
+        fields = [
+            "title",
+            "category_id",
+            "category",
+            "priority",
+        ]
+    
+    def get_category(self,obj):
+        return obj.category.slug
+    def get_category_id(self,obj):
+        return obj.category.id
+
+class MenuSerializer(serializers.ModelSerializer):
+    childs  = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
+    category_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Menu
+        ordering = ['-priority']
+        fields = [
+            "title",
+            "category_id",
+            "category",
+            "priority",
+            "menu_type",
+            "childs"
+        ]
+    def get_category(self,obj):
+        return obj.category.slug
+    def get_category_id(self,obj):
+        return obj.category.id
+    
+    def get_childs(self,obj):
+        queryset            = MenuElement.objects.filter(parent=obj.id)
+        menuElementSerializer  = MenuElementSerializer(queryset,many=True).data
+        return menuElementSerializer
