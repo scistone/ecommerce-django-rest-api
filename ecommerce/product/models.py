@@ -80,7 +80,7 @@ class Product(models.Model):
         return super(Product,self).save(*args,**kwargs)
         
     def get_absolute_url(self):
-        return f'product/{self.model_code}/'
+        return f'product/detail/{self.model_code}/{self.slug}'
 
     def __str__(self):
         return self.title
