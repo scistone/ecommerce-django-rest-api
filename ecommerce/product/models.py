@@ -11,10 +11,9 @@ from django.utils.text import slugify
 
 class Collection(models.Model):
     name                = models.CharField(max_length=100)
-    image               = models.ImageField(upload_to="uploads/",blank=True,null=True)
     slug                = models.SlugField(unique=True,max_length=150,editable=False)
     description         = models.TextField(null=True,blank=True)
-    meta_description    = models.CharField(max_length=144,editable=False)
+    meta_description    = models.CharField(max_length=144,blank=True,null=True)
     date_created        = models.DateTimeField(auto_now_add=True,editable=False)
 
     def get_slug(self):
@@ -36,16 +35,12 @@ class Collection(models.Model):
             self.slug = self.get_slug()
             
         return super(Collection,self).save(*args,**kwargs)
-    
-    def get_absolute_url(self):
-        return f'/{self.slug}/'
-
     def __str__(self):
         return self.name
 
 
 class Product(models.Model):
-    categories      = models.ManyToManyField(Collection,blank=True)
+    collection      = models.ManyToManyField(Collection,blank=True)
     barcode         = models.CharField(max_length=20)
     title           = models.CharField(max_length=144)
     thumbnail       = models.ImageField(upload_to='uploads/',blank=True,null=True)

@@ -1,7 +1,11 @@
 from django.urls import path,include
 
 
-from .views import CreateCollectionAPIView,CollectionListAPIView,CollectionUpdateAPIView,CollectionDeleteAPIView
+from .views import (CreateCollectionAPIView,
+        CollectionListAPIView,
+        CollectionUpdateAPIView,
+        CollectionDeleteAPIView,
+)
 
 urlpatterns = [
     path('list/' ,  CollectionListAPIView.as_view(),  name='categories'),
