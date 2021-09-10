@@ -53,6 +53,7 @@ class Product(models.Model):
     meta_description= models.CharField(max_length=144,editable=False)
     date_created    = models.DateTimeField(auto_now_add=True)
     price           = models.DecimalField(max_digits=6,decimal_places=2)
+    stock           = models.IntegerField(default=0)
 
     def get_slug(self):
         slug   = slugify(self.title.replace("ı","i"))

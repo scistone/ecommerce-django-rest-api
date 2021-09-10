@@ -11,6 +11,9 @@ from .views import (
 
         CreateMenuAPIView,
         CreateMenuElementAPIView,
+
+        BlogPostCreateAPIView,
+        BlogPostUpdatePIView
 )
 
 urlpatterns = [
@@ -23,4 +26,7 @@ urlpatterns = [
     
     path('product/add/',CreateProductAPIView.as_view(),  name='create_product'),
     path('product/update/<slug>',ProductUpdateAPIView.as_view(),  name='update_product'),
+
+    path('blog-post/add/',BlogPostCreateAPIView.as_view(),  name='create_blog_post'),
+    path('blog-post/update/<slug>',BlogPostUpdatePIView.as_view(),  name='update_blog_post'),
 ]

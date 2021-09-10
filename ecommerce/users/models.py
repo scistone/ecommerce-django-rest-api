@@ -80,3 +80,43 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.first_name
+
+class Customer(models.Model):
+    GENDER_TYPES = [
+        ('F','Female'),
+        ('M','Male')
+    ]
+    email                   = models.EmailField(unique=True)
+    user                    = models.ForeignKey(User,on_delete=models.SET_NULL,related_name="customer",null=True,blank=True)
+    date_of_birth           = models.DateField(verbose_name='birth date',blank=True,null=True)
+    phone                   = models.CharField(verbose_name="phone",max_length=30,blank=True,null=True)
+    gender                  = models.CharField(blank=True,null=True,default="B",choices=GENDER_TYPES,max_length=1)
+    date_joined             = models.DateTimeField(auto_now_add=True, auto_now=False)
+    last_action             = models.DateTimeField(verbose_name='last action', auto_now=True)
+
+
+    def __str__(self):
+        return f"{self.email}"
+
+
+class CustomerAddress(models.Model):
+    ADDRESS_TYPES = [
+        ('B','Billing Address'),
+        ('S','Shipping Address'),
+    ]
+    customer                = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    first_name              = models.CharField(max_length=100)
+    last_name               = models.CharField(max_length=100)
+    phone                   = models.CharField(verbose_name="phone",max_length=10)
+    address                 = models.TextField(max_length=100)
+    zip_code                = models.CharField(max_length=7,null=True,blank=True)
+    city                    = models.CharField(max_length=100)
+    district                = models.CharField(max_length=100)
+    country                 = models.CharField(max_length=100)
+    last_used               = models.DateTimeField(verbose_name='last action', auto_now=True)
+    address_type            = models.CharField(choices=ADDRESS_TYPES,max_length=1)
+    active                  = models.BooleanField(default=1)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.adresss} {self.city}/{self.district} {self.zip_code}"
+

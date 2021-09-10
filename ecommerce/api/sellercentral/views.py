@@ -16,7 +16,7 @@ from knox.auth import TokenAuthentication
 
 #Serializers & Models
 from product.models import Collection,Product
-from api.serializers import CollectionSerializer,CreateProductSerializer
+from api.serializers import CollectionSerializer,CreateProductSerializer,BlogPostSerializer
 
 
 class CreateCollectionAPIView(CreateAPIView):
@@ -59,6 +59,7 @@ class CollectionDeleteAPIView(RetrieveDestroyAPIView):
     serializer_class = CollectionSerializer
     lookup_field = 'slug'
 
+###########################
 class CreateProductAPIView(CreateAPIView):
     """
 
@@ -71,7 +72,7 @@ class CreateProductAPIView(CreateAPIView):
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CreateProductSerializer
 
-###########################
+
 class ProductUpdateAPIView(RetrieveUpdateAPIView):
     """
 
@@ -114,3 +115,25 @@ class CreateMenuElementAPIView(CreateAPIView):
     permission_classes = [IsAdminUser]
     authentication_classes = [TokenAuthentication,SessionAuthentication]
     serializer_class = CreateMenuElementSerializer
+
+
+from core.models import BlogPost
+
+class BlogPostCreateAPIView(CreateAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    permission_classes = [IsAdminUser]
+    
+    def perform_create(self,serializer):
+        serializer.save(author=self.request.user)
+        return serializer
+
+class BlogPostUpdatePIView(RetrieveUpdateAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    permission_classes = [IsAdminUser]
+    lookup_field = "slug"
+    
+    def perform_update(self,serializer):
+        serializer.save(modified_by=self.request.user)
+        return serializer

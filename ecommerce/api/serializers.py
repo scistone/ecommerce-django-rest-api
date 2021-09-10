@@ -56,6 +56,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'get_thumbnail'
         ]
 
+#Menu Serializer
 from core.models import Menu,MenuElement
 class MenuElementSerializer(serializers.ModelSerializer):
     category        = serializers.SerializerMethodField()
@@ -100,3 +101,26 @@ class MenuSerializer(serializers.ModelSerializer):
         queryset            = MenuElement.objects.filter(parent=obj.id)
         menuElementSerializer  = MenuElementSerializer(queryset,many=True).data
         return menuElementSerializer
+
+from users.models import User
+
+class UserEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields= ["get_full_name"]
+
+from core.models import BlogPost
+class BlogPostSerializer(serializers.ModelSerializer):
+    author = UserEmailSerializer(read_only=True)
+    modified_by = UserEmailSerializer(read_only=True)
+    class Meta:
+        model = BlogPost
+        fields = [
+            'title',
+            'content',
+            'author',
+            'created_at',
+            'modified_at',
+            'slug',
+            'modified_by'
+        ]

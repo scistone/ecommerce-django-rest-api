@@ -21,7 +21,8 @@ from .serializers import (
         CollectionSerializer,
         CreateProductSerializer,
         ProductSerializer,
-        MenuSerializer
+        MenuSerializer,
+        BlogPostSerializer
 )
 
 
@@ -83,3 +84,18 @@ class MenuListView(ListAPIView):
     queryset                = Menu.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["menu_type"]
+
+
+
+from core.models import BlogPost
+class BlogPostListAPIView(ListAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    permission_classes = [AllowAny]
+
+class BlogPostDetailAPIView(RetrieveAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    permission_classes = [AllowAny]
+    lookup_field = "slug"
+    
