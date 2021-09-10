@@ -79,22 +79,7 @@ class User(AbstractBaseUser):
 
 
     def get_full_name(self):
-        """
-        This method is required by Django for things like handling emails.
-        Typically this would be the user's first and last name. Since we do
-        not store the user's real name, we return their username instead.
-        """
         return (self.first_name + self.last_name)
 
     def get_short_name(self):
-        """
-        This method is required by Django for things like handling emails.
-        Typically, this would be the user's first name. Since we do not store
-        the user's real name, we return their username instead.
-        """
         return self.first_name
-
-# @receiver(post_save,sender=settings.AUTH_USER_MODEL)
-# def create_auth_token(sender,instance=None,created=False,**kwargs):
-#     if created:
-#         Token.objects.create(user=instance)

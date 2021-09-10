@@ -3,7 +3,16 @@ from django.urls import path,include
 
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 
-from .views import RegisterAPIView,LoginAPIView,UserAPIView,ChangePasswordView,UserUpdateAPIView,RequestPasswordResetEmailView,PasswordTokenCheckAPI,SetNewPasswordAPIView
+from .views import (
+    RegisterAPIView,
+    LoginAPIView,
+    UserAPIView,
+    ChangePasswordView,
+    UserUpdateAPIView,
+    RequestPasswordResetEmailView,
+    PasswordTokenCheckAPI,
+    SetNewPasswordAPIView
+)
 
 from knox import views as knox_views
 
