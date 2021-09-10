@@ -12,9 +12,6 @@ from django.contrib.auth.models import (
 from django.utils.translation import gettext_lazy as _
 
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from rest_framework.authtoken.models import Token
 
 
 class UserManager(BaseUserManager):
