@@ -17,8 +17,8 @@ from .views import (
 )
 
 urlpatterns = [
-    path('menu/add/',CreateMenuAPIView.as_view(),  name='create_collection'),
-    path('menu/element/add/',CreateMenuElementAPIView.as_view(),  name='create_collection'),
+    path('menu/add/',CreateMenuAPIView.as_view(),  name='create_menu'),
+    path('menu/element/add/',CreateMenuElementAPIView.as_view(),  name='create_menu_element'),
 
     path('collection/add/',CreateCollectionAPIView.as_view(),  name='create_collection'),
     path('collection/update/<slug>/',CollectionUpdateAPIView.as_view(),  name='update_collection'),
