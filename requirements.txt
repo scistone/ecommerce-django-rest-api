@@ -5,3 +5,4 @@ django-filter
 iyzipay
 Pillow
 django-rest-knox
+sendgrid

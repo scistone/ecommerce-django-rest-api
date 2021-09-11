@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from knox.models import AuthToken
 
-from users.models import User
+from users.models import User,Customer
 from .serializers import RegisterSerializer,UserSerializer,LoginSerializer,ChangePasswordSerializer,ResetPasswordEmailRequestSerializer,SetNewPasswordSerializer
 #Register
 from knox.auth import TokenAuthentication
@@ -24,6 +24,7 @@ class RegisterAPIView(GenericAPIView):
         user = serializer.save()
 
         instance, token = AuthToken.objects.create(user)
+        customer = Customer.objects.create(user=user)
         login(request, user)
         return Response({
             "user"  : UserSerializer(user,context=serializer).data,

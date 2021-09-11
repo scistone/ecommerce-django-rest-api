@@ -13,6 +13,7 @@ from .views import (
 urlpatterns = [
     path('auth/', include('api.auth.urls')),
     path('sellercentral/', include('api.sellercentral.urls')),
+    path('customer/', include('api.customer.urls')),
     
     
 
@@ -23,4 +24,6 @@ urlpatterns = [
 
     path('blog-posts/',  BlogPostListAPIView.as_view(),  name='blog_posts'),
     path('blog-post/<slug>/',  BlogPostDetailAPIView.as_view(),  name='blog_post_detail'),
+
+
 ]

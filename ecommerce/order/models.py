@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 from users.models import Customer
+from product.models import Product
 
 class CartItem(models.Model):
     STATUS_MEANS = [

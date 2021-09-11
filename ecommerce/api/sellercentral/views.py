@@ -120,6 +120,12 @@ class CreateMenuElementAPIView(CreateAPIView):
 from core.models import BlogPost
 
 class BlogPostCreateAPIView(CreateAPIView):
+    """
+    
+    Method: POST
+    URL : api/sellercentral/blog-post/add/
+
+    """
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
     permission_classes = [IsAdminUser]
@@ -129,6 +135,12 @@ class BlogPostCreateAPIView(CreateAPIView):
         return serializer
 
 class BlogPostUpdatePIView(RetrieveUpdateAPIView):
+    """
+    
+    Method: POST
+    URL : api/sellercentral/blog-post/update/<slug>/
+
+    """
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
     permission_classes = [IsAdminUser]
