@@ -160,3 +160,16 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = FROM_EMAIL
+
+
+IYZICO_API_KEY = os.getenv('IYZICO_API_KEY')
+IYZICO_SECRET_KEY = os.getenv('IYZICO_SECRET_KEY')
+
+IYZICO_OPTIONS = {
+    'api_key': IYZICO_API_KEY,
+    'secret_key': IYZICO_SECRET_KEY,
+    'base_url': 'sandbox-api.iyzipay.com'
+}
+
+URL = 'http://localhost:8000'
+FRONTEND_URL = "http://localhost:3000"

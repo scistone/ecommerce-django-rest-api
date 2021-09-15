@@ -13,6 +13,7 @@ from .views import (
 urlpatterns = [
     path('auth/', include('api.auth.urls')),
     path('sellercentral/', include('api.sellercentral.urls')),
+    path('order/', include('api.order.urls')),
     
     
 
