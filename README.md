@@ -113,3 +113,62 @@ Auth
     - password
     - token
     - uidb64
+
+Seller
+-----
+
+These APIs' permissions classes are "IsAdminUser"
+
+- api/sellercentral/menu/add/ (POST)
+
+    - title
+    - category
+    - menu_type
+    - priority
+
+- api/sellercentral/menu/element/add/ (POST)
+
+    - title
+    - category
+    - priority
+    - parent
+
+- api/sellercentral/collection/add/ (POST)
+
+    - name
+    - description
+    - meta_description
+
+- api/sellercentral/collection/update/< slug>/ (GET,POST)
+
+    - name
+    - description
+    - meta_description
+
+- api/sellercentral/collection/delete/< slug>/ (DELETE)
+
+- api/sellercentral/product/add/ (POST)
+
+    - title
+    - barcode
+    - collections
+    - image
+    - color
+    - size
+    - model_code
+    - description
+    - meta_description
+    - price
+
+- api/sellercentral/product/update/< slug> (GET,POST)
+
+    - title
+    - barcode
+    - collections
+    - image
+    - color
+    - size
+    - model_code
+    - description
+    - meta_description
+    - price
