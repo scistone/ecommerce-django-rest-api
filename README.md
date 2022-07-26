@@ -1,5 +1,5 @@
 # DRF Ecommerce
-Open Source E-commerce API System with Django Rest Framework. The development process still continues.
+Open Source E-commerce API System with Django Rest Framework.
 
 # Get Started
 
